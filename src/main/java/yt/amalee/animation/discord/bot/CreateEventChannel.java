@@ -37,6 +37,7 @@ public class CreateEventChannel extends AbstractEvent {
 		
 		if(!perms.contains(Permission.ADMINISTRATOR)) {
 			System.out.println("not admin");
+			return;
 		}
 		
 		String msg =  getEvent().getMessage().getContentDisplay();
