@@ -1,20 +1,16 @@
 package yt.amalee.animation.discord.bot;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.Event;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.EventListener;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public abstract class AbstractEvent implements EventListener {
+public abstract class AbstractEvent extends ListenerAdapter {
 
 	String[] words;
 	MessageReceivedEvent event;
-
-	public void onEvent(Event event) {
-		if(!(event instanceof MessageReceivedEvent)){
-			return;
-		}
-		this.event = (MessageReceivedEvent) event;
+	
+	public void onMessageReceived(MessageReceivedEvent event) {
+		this.event = event;
 		this.words = getEvent().getMessage().getContentDisplay().split(" ");
 		if(!words[0].equalsIgnoreCase(commandString())){
 			return;

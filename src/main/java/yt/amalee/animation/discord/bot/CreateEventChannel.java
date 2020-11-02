@@ -1,16 +1,16 @@
 package yt.amalee.animation.discord.bot;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Category;
-import net.dv8tion.jda.core.entities.Channel;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.PermissionOverride;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.PermissionOverride;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CreateEventChannel extends AbstractEvent {
 
@@ -32,8 +32,8 @@ public class CreateEventChannel extends AbstractEvent {
 
 	@Override
 	protected void runEvent(MessageReceivedEvent event) {
-		
-		List<Permission> perms = event.getMember().getPermissions();
+		System.out.println("test triggered");
+		EnumSet<Permission> perms = event.getMember().getPermissions();
 		
 		if(!perms.contains(Permission.ADMINISTRATOR)) {
 			System.out.println("not admin");
@@ -52,7 +52,7 @@ public class CreateEventChannel extends AbstractEvent {
 		Role projectRole;
 		if(roleList.isEmpty()) {
 			System.out.println("role list empty");
-			projectRole = guild.getController().createRole().setName(roleName).complete();
+			projectRole = guild.createRole().setName(roleName).complete();
 		} else {
 			projectRole = roleList.get(0);
 		}	
@@ -65,7 +65,7 @@ public class CreateEventChannel extends AbstractEvent {
 		Category projectCategory = categoryList.get(0);
 		
 		List<TextChannel> channelList = guild.getTextChannelsByName(channelString, true);
-		Channel channel;
+		TextChannel channel;
 		if(channelList.isEmpty()) {
 			System.out.println("channel list empty");
 			channel =  projectCategory.createTextChannel(channelString).complete();
